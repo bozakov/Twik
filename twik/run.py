@@ -39,6 +39,7 @@ def main():
             help="length of generated password [4-26]. Default: 12")
     parser.add_argument("-p", "--profile", type=str, default=None,
             help="profile to use. Default:'Personal'")
+    parser.add_argument("-q", "--quiet", action='store_true', default=None, help="output password only.")
     parser.add_argument("-t", "--passwordtype", type=int, choices=[1, 2, 3],
             help='''
             1 for ALPHANUMERIC_AND_SPECIAL_CHAR
@@ -50,8 +51,9 @@ def main():
 
     util = Util(args.tag, args.chars, args.passwordtype, args.profile)
 
+    prompt = 'Master key for profile "%s": ' % util.profile
     try:
-        master_key = getpass.getpass(prompt='Master Key: ')
+        master_key = getpass.getpass(prompt=prompt)
     except KeyboardInterrupt:
         print "^C"
         raise SystemExit(0)
@@ -60,7 +62,10 @@ def main():
     password = twik.getpassword(args.tag, util.get_privatekey(), master_key,
             util.get_chars(), util.get_passord_type())
 
-    print "Your password is %s" % password
+    if args.quiet:
+        sys.stdout.write(password)
+    else:
+        print "Your password is %s" % password,
 
 if __name__ == "__main__":
     main()

@@ -83,7 +83,6 @@ class Util(object):
                     break
             if self.profile == None:
                 self.profile = self.config.sections()[0]
-            print 'Using profile : %s' % self.profile
 
         if self.profile and self.config.has_option(self.profile, 'private_key'):
             private_key = self.config.get(self.profile, 'private_key')
@@ -104,7 +103,7 @@ class Util(object):
             if self.profile == 'Personal':
                 self.config.set(self.profile, 'default', 1)
             self.writeconfig()
-            print 'New profile is generated'
+            print 'New profile generated'
             self.config.read(self.filename)
         return private_key
 
