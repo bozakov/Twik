@@ -7,17 +7,10 @@ Python version of Twik
 
 
 ## Installation instructions:
-  * Using PIP
-  
-```pip install twik```
-
-  * Using easy_install
-  
-```easy_install twik```
 
   * Manual
 ```
-git clone https://github.com/coxande/Twik.git
+git clone https://github.com/bozakov/Twik.git
 cd Twik
 python setup.py install
 ```
