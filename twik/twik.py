@@ -24,6 +24,7 @@ You should have received a copy of the GNU General Public License
 along with Twik.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from base64 import b64encode
 from hashlib import sha1
 from util import Util
 import hmac
@@ -39,13 +40,12 @@ class Twik(object):
         for i in range(0, length - reserved):
             tmp = (pos0 + reserved + i) % length
             char = ord(mhash[tmp])
-            if char >= ord(cstart) and char < ord(cstart) + cnum:
+            if ord(cstart) <= char < ord(cstart) + cnum:
                 return mhash
         head = mhash[:pos] if pos > 0 else ""
         inject = ((seed + ord(mhash[pos])) % cnum) + ord(cstart)
-        tail = mhash[pos+1:] if (pos + 1 < len(mhash)) else mhash
+        tail = mhash[pos + 1:] if (pos + 1 < len(mhash)) else mhash
         return head + chr(inject) + tail
-
 
     def removespecialcharacters(self, mhash, seed, length):
         inputchars = list(mhash)
@@ -62,13 +62,13 @@ class Twik(object):
         for i in range(0, length):
             if not inputchars[i].isdigit():
                 inputchars[i] = chr(((seed + ord(inputchars[pivot])) % 10 +
-                    ord('0')))
+                                     ord('0')))
                 pivot = i + 1
         return "".join(inputchars)
 
     def generatehash(self, tag, key, length, password_type):
-        digest = hmac.new(key, tag, sha1).digest()
-        mhash = digest.encode('base64')[:-2]
+        digest = hmac.new(bytes(key, 'ascii'), tag.encode('ascii'), sha1).digest()
+        mhash = b64encode(digest)[:-1].decode('ascii')
 
         seed = 0
         for i in range(0, len(mhash)):
@@ -90,7 +90,6 @@ class Twik(object):
                 mhash = self.removespecialcharacters(mhash, seed, length)
 
         return mhash[:length]
-
 
     def getpassword(self, tag, private_key, master_key, length, password_type):
         if length > 26 or length < 4:

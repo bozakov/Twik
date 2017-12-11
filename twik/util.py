@@ -25,8 +25,10 @@ along with Twik.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import os.path
-import ConfigParser
 from random import SystemRandom
+
+import configparser
+
 
 def privatekeygenerator():
     """
@@ -41,27 +43,29 @@ def privatekeygenerator():
     for i in range(0, len(subgroups_length)):
         for j in range(0, subgroups_length[i]):
             key += allowed_chars[systemrandom.randrange(allowedcharslength)]
-        if i < (len(subgroups_length) -1):
+        if i < (len(subgroups_length) - 1):
             key += subgroup_separator
     return key
+
 
 class Util(object):
     """
     Class for deal with config file
     """
+
     def __init__(self, tag, chars, pass_type, profile):
         """
         Constructor
         """
         homedir = os.path.expanduser('~')
         self.filename = os.path.join(homedir, '.twik.conf')
-        self.config = ConfigParser.ConfigParser()
+        self.config = configparser.ConfigParser()
         self.config.read(self.filename)
         self.tag = tag
         self.chars = chars
         self.profile = profile
         self.pass_type = pass_type
-        #Initialize default values
+        # Initialize default values
         self.get_privatekey()
 
     def writeconfig(self):
@@ -76,50 +80,50 @@ class Util(object):
         Get private key if not exists create new one
         """
         private_key = ''
-        if self.profile == None and len(self.config.sections()) > 0:
+        if self.profile is None and len(self.config.sections()) > 0:
             for session in self.config.sections():
-                if self.config.has_option(session, 'default') and self.config.getboolean(session, 'default') == True:
+                if self.config.has_option(session, 'default') and self.config.getboolean(session, 'default') is True:
                     self.profile = session
                     break
-            if self.profile == None:
+            if self.profile is None:
                 self.profile = self.config.sections()[0]
 
         if self.profile and self.config.has_option(self.profile, 'private_key'):
             private_key = self.config.get(self.profile, 'private_key')
         else:
             private_key = privatekeygenerator()
-            if self.profile == None:
+            if self.profile is None:
                 self.profile = 'Personal'
             self.config.add_section(self.profile)
-            self.config.set(self.profile, 'private_key', private_key)
+            self.config.set(self.profile, 'private_key', str(private_key))
             chars = self.chars
-            if chars == None:
+            if chars is None:
                 chars = 12
             pass_type = self.pass_type
-            if pass_type == None:
+            if pass_type is None:
                 pass_type = 1
-            self.config.set(self.profile, 'chars', chars)
-            self.config.set(self.profile, 'password_type', pass_type)
+            self.config.set(self.profile, 'chars', str(chars))
+            self.config.set(self.profile, 'password_type', str(pass_type))
             if self.profile == 'Personal':
-                self.config.set(self.profile, 'default', 1)
+                self.config.set(self.profile, 'default', str(1))
             self.writeconfig()
-            print 'New profile generated'
+            print('New profile generated')
             self.config.read(self.filename)
         return private_key
 
     def get_chars(self):
         config_key = '%s_chars' % self.tag
 
-        if self.config.has_option(self.profile, config_key) and self.chars == None:
+        if self.config.has_option(self.profile, config_key) and self.chars is None:
             self.chars = self.config.getint(self.profile, config_key)
         else:
-            if self.chars == None and self.config.has_option(self.profile, 'chars'):
+            if self.chars is None and self.config.has_option(self.profile, 'chars'):
                 self.chars = self.config.getint(self.profile, 'chars')
-            self.config.set(self.profile, config_key, self.chars)
+            self.config.set(self.profile, config_key, str(self.chars))
             self.writeconfig()
 
         if self.chars < 4 or self.chars > 26:
-            print 'invalid password length value from configuration using default'
+            print('invalid password length value from configuration using default')
             self.chars = 12
 
         return self.chars
@@ -127,17 +131,17 @@ class Util(object):
     def get_passord_type(self):
         config_key = '%s_password_type' % self.tag
 
-        if self.config.has_option(self.profile, config_key) and self.pass_type == None:
+        if self.config.has_option(self.profile, config_key) and self.pass_type is None:
             self.pass_type = self.config.getint(self.profile, config_key)
         else:
-            if self.pass_type == None and self.config.has_option(self.profile, 'password_type'):
+            if self.pass_type is None and self.config.has_option(self.profile, 'password_type'):
                 self.pass_type = self.config.getint(self.profile, 'password_type')
 
-            self.config.set(self.profile, config_key, self.pass_type)
+            self.config.set(self.profile, config_key, str(self.pass_type))
             self.writeconfig()
 
         if self.pass_type < 1 or self.pass_type > 3:
-            print 'invalid password type value from configuration using default'
+            print('invalid password type value from configuration using default')
             self.pass_type = 1
 
         return self.pass_type

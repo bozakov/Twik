@@ -24,6 +24,7 @@ import getpass
 import argparse
 import sys
 
+
 def main():
     """
     ALPHANUMERIC_AND_SPECIAL_CHARS=1
@@ -39,7 +40,7 @@ def main():
             help="length of generated password [4-26]. Default: 12")
     parser.add_argument("-p", "--profile", type=str, default=None,
             help="profile to use. Default:'Personal'")
-    parser.add_argument("-q", "--quiet", action='store_true', default=None, help="output password only.")
+    parser.add_argument("-q", "--quiet", action='store_true', default=None, help="output password only for copying to clipboard")
     parser.add_argument("-t", "--passwordtype", type=int, choices=[1, 2, 3],
             help='''
             1 for ALPHANUMERIC_AND_SPECIAL_CHAR
@@ -55,7 +56,7 @@ def main():
     try:
         master_key = getpass.getpass(prompt=prompt)
     except KeyboardInterrupt:
-        print "^C"
+        print('^C')
         raise SystemExit(0)
 
     twik = Twik()
@@ -65,7 +66,8 @@ def main():
     if args.quiet:
         sys.stdout.write(password)
     else:
-        print "Your password is %s" % password,
+        print('Your password is %s' % password)
+
 
 if __name__ == "__main__":
     main()

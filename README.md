@@ -39,6 +39,7 @@ optional arguments:
                         length of generated password [4-26]. Default: 12
   -p PROFILE, --profile PROFILE
                         profile to use. Default:'Profile'
+  -q, --quiet           output password only for copying to clipboard
   -t {1,2,3}, --passwordtype {1,2,3}
                         1 for ALPHANUMERIC_AND_SPECIAL_CHAR
                         2 for ALPHANUMERIC
@@ -48,7 +49,7 @@ optional arguments:
 
 ```
 
-Private Keys is stored in ~/.twik.conf you need change it to match with chrome extension and android app:
+Private keys is stored in ~/.twik.conf you need change it to match with chrome extension and android app:
 
 ```
 [Personal]
