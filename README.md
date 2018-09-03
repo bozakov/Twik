@@ -1,12 +1,20 @@
 Twik
 ====
 
-Python 3 version of Twik. This is hash based password generator based on @coxande's [version](https://github.com/coxande/Twik).
+Python 3 version of Twik. Twik is hash based password generator based on @coxande's Python 2 [version](https://github.com/coxande/Twik).
 
 [![Build Status](https://travis-ci.org/bozakov/Twik.svg?branch=master)](https://travis-ci.org/bozakov/Twik)
 
 
-## Installation instructions:
+## Example:
+
+```
+$ twik github
+Master key for profile "Personal":
+Your password is P7$b+Zuf
+```
+
+## Installation:
 
 ```
 git clone https://github.com/bozakov/Twik.git
@@ -15,10 +23,10 @@ python3 setup.py install
 ```
 
 
-## Usage instructions:
+## Usage:
 
 ```
-usage: twik [-h] [-c CHARS] [-p PROFILE] [-t {1,2,3}] tag
+usage: twik [-h] [-c CHARS] [-p PROFILE] [-q] [-t {1,2,3}] tag
 
 positional arguments:
   tag                   generate password for a specified tag
