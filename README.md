@@ -12,7 +12,7 @@ Python version of Twik
 ```
 git clone https://github.com/bozakov/Twik.git
 cd Twik
-python setup.py install
+python3 setup.py install
 ```
 
 

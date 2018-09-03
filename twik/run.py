@@ -18,8 +18,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Twik.  If not, see <http://www.gnu.org/licenses/>.
 """
-from util import Util
-from twik import Twik
+from twik.util import Util
+from twik.twik import Twik
 import getpass
 import argparse
 import sys

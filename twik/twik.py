@@ -26,7 +26,6 @@ along with Twik.  If not, see <http://www.gnu.org/licenses/>.
 
 from base64 import b64encode
 from hashlib import sha1
-from util import Util
 import hmac
 import getpass
 import argparse
