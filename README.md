@@ -1,14 +1,13 @@
 Twik
 ====
 
-Python version of Twik
+Python 3 version of Twik. This is hash based password generator based on @coxande's [version](https://github.com/coxande/Twik).
 
-[![Build Status](https://travis-ci.org/coxande/Twik.svg?branch=master)](https://travis-ci.org/coxande/Twik)
+[![Build Status](https://travis-ci.org/bozakov/Twik.svg?branch=master)](https://travis-ci.org/bozakov/Twik)
 
 
 ## Installation instructions:
 
-  * Manual
 ```
 git clone https://github.com/bozakov/Twik.git
 cd Twik
@@ -16,9 +15,7 @@ python3 setup.py install
 ```
 
 
-## Usage instructions :
-
-
+## Usage instructions:
 
 ```
 usage: twik [-h] [-c CHARS] [-p PROFILE] [-t {1,2,3}] tag
@@ -42,7 +39,7 @@ optional arguments:
 
 ```
 
-Private keys is stored in ~/.twik.conf you need change it to match with chrome extension and android app:
+Private keys are stored in `~/.twik.conf` you need change it to match with chrome extension or android app:
 
 ```
 [Personal]
@@ -61,4 +58,3 @@ password_type = 1
 reddit_chars = 22
 reddit_password_type = 2
 ```
-
